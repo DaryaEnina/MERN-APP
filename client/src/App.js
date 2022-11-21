@@ -1,11 +1,11 @@
-import "./App.css";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import useRoutes from "./routes";
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Hello</h1>
-    </div>
-  );
+  const routes = useRoutes(false);
+  return <Router>{routes}</Router>;
 }
 
 export default App;
