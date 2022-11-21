@@ -4,14 +4,14 @@ const { check, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const User = require("../models/user");
-const { ResultWithContext } = require("express-validator/src/chain");
 const router = Router();
 
 router.post(
   "/register",
   [
-    check("email", "Некорректный email").isEmail().trim().normalizeEmail(),
-    check("password").trim(),
+    check("email", "Некорректный email").isEmail(),
+    check("password"),
+    check("name").notEmpty(),
   ],
   async (req, res) => {
     try {
@@ -23,7 +23,7 @@ router.post(
         });
       }
 
-      const { email, password } = req.body;
+      const { email, password, name } = req.body;
 
       const candidate = await User.findOne({ email });
       if (candidate) {
@@ -34,12 +34,12 @@ router.post(
 
       const hashedPassword = await bcrypt.hash(password, 12);
 
-      const user = new User({ email, password: hashedPassword });
+      const user = new User({ email, password: hashedPassword, name });
 
       await user.save();
 
       res.status(201).json({ message: "Пользователь создан" });
-    } catch (error) {
+    } catch (e) {
       res
         .status(500)
         .json({ message: "Что-то пошло не так, попробуйте снова..." });
