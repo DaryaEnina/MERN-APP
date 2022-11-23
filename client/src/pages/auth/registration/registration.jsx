@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../../hooks/http.hook";
-import { useMessage } from "../../../hooks/message.hook";
+import { Toast, ToastContainer } from "react-bootstrap";
+import { dateNow } from "../../../date";
 import "../style.css";
 
 const Registration = () => {
-  const message = useMessage();
   const { loading, request, error, clearError } = useHttp();
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
+    dateReg: dateNow(),
+    dateLog: dateNow(),
+    status: "unblock",
   });
+  const [show, setShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    message(error); //не работает
+    if (error) {
+      setShow(true);
+      setErrorMessage(error);
+    }
     clearError();
-  }, [error, message, clearError]);
+  }, [error, clearError]);
 
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -24,11 +32,23 @@ const Registration = () => {
   const registerHandler = async () => {
     try {
       const data = await request("api/auth/register", "POST", { ...form });
-      console.log("Data:", data);
+      console.log(data);
     } catch (error) {}
   };
   return (
     <div className="Auth-form-container">
+      <ToastContainer position="top-end">
+        <Toast
+          onClose={() => setShow(false)}
+          show={show}
+          delay={3000}
+          autohide
+          bg="danger"
+        >
+          <Toast.Body>{errorMessage}</Toast.Body>
+        </Toast>
+      </ToastContainer>
+
       <div className="Auth-form">
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign Up</h3>
