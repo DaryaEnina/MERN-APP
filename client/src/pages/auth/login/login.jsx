@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttp } from "../../../hooks/http.hook";
 import { Toast, ToastContainer } from "react-bootstrap";
-import { dateNow } from "../../../date";
 import "../style.css";
 import { useContext } from "react";
 import { LoginContext } from "../../../context/loginContext";
@@ -12,7 +11,6 @@ const Login = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
-    dateLog: dateNow(),
   });
   const [show, setShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -29,7 +27,6 @@ const Login = () => {
     setForm({
       ...form,
       [event.target.name]: event.target.value,
-      dateLog: dateNow(),
     });
   };
 

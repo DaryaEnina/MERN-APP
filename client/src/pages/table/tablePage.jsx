@@ -1,27 +1,89 @@
 import React from "react";
-import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import { useState, useEffect, useCallback, useContext } from "react";
 import { useHttp } from "../../hooks/http.hook";
-import { Container, Table } from "react-bootstrap";
+import { LoginContext } from "../../context/loginContext";
+import { Container, Table, Button, Row, Col } from "react-bootstrap";
 
 const TablePage = () => {
   const [data, setData] = useState([]);
+  const [rowItem, setRowItem] = useState([]);
   const { request } = useHttp();
+  const auth = useContext(LoginContext);
 
-  const fetchLinks = useCallback(async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const fetched = await request("/api/users", "GET", null);
       setData(fetched);
-      console.log(fetched);
     } catch (e) {}
   }, [request]);
 
-  useEffect(() => {
-    fetchLinks();
-  }, [fetchLinks]);
+  const onChoose = useCallback(
+    (e, item) => {
+      if (e.target.checked === true) {
+        let rows = rowItem;
+        rows.push(item);
+        setRowItem(rows);
+      }
+      console.log(rowItem);
+    },
+    [rowItem]
+  );
 
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  const onBlock = async () => {
+    try {
+    } catch (error) {}
+  };
+
+  //DELETE
+  const deleteUser = useCallback(async (id) => {
+    try {
+      await axios.delete(
+        `/api/users/delete/${id}`,
+        { id },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  //LOGOUT
+  const onLogout = () => {
+    auth.logOut();
+  };
   return (
     <Container className="justify-content-md-center">
-      <h1 className="mt-5 mb-5">Table</h1>
+      <h1 className="mt-5 mb-5 text-center">Table</h1>
+      <Row>
+        <Col md={4}>
+          <Button className="m-3" variant="dark" onClick={onBlock}>
+            Block
+          </Button>
+          <Button className="m-3" variant="secondary">
+            Unblock
+          </Button>
+          <Button
+            className="m-3"
+            variant="danger"
+            onClick={() => deleteUser(rowItem[0]._id)}
+          >
+            Delete
+          </Button>
+        </Col>
+        <Col md={{ span: 4, offset: 4 }} className="d-flex justify-content-end">
+          <Button className="m-3 " variant="danger" onClick={onLogout}>
+            LogOut
+          </Button>
+        </Col>
+      </Row>
+
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -38,7 +100,13 @@ const TablePage = () => {
           {data.map((item, index) => {
             return (
               <tr key={item._id}>
-                <td>{index + 1}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    id={item._id}
+                    onChange={(e) => onChoose(e, item)}
+                  />
+                </td>
                 <td>{item._id}</td>
                 <td>{item.name}</td>
                 <td>{item.email}</td>

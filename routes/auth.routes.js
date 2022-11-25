@@ -9,7 +9,7 @@ const router = Router();
 router.post(
   "/register",
   [
-    check("email", "Некорректный email").isEmail(),
+    check("email", "Некорректный email").isEmail().normalizeEmail(),
     check("password"),
     check("name").notEmpty(),
   ],
@@ -74,7 +74,7 @@ router.post(
         });
       }
 
-      const { email, password, dateLog } = req.body;
+      const { email, password } = req.body;
 
       const user = await User.findOne({ email });
 

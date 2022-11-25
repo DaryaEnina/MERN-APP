@@ -15,7 +15,7 @@
     "bcrypt": "^5.1.0",
     "client": "^0.0.1",
     "config": "^3.3.8",
-    "create-react-app": "^5.0.1",
+    "create-react-app": "^1.2.1",
     "express": "^4.18.2",
     "express-validator": "^6.14.2",
     "js": "^0.1.0",
