@@ -36,7 +36,8 @@ router.post("/", async (req, res) => {
 
 router.delete("/delete/:id", async (req, res) => {
   try {
-    const user = await Users.deleteOne({ _id: req.params.id });
+    const id = req.params.id.split(",");
+    const user = await Users.deleteMany({ _id: { $in: id } });
     res.json(user);
   } catch (e) {
     console.log(e.message);

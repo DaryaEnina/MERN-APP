@@ -22,7 +22,7 @@ const TablePage = () => {
     (e, item) => {
       if (e.target.checked === true) {
         let rows = rowItem;
-        rows.push(item);
+        rows.push(item._id);
         setRowItem(rows);
       }
       console.log(rowItem);
@@ -72,7 +72,7 @@ const TablePage = () => {
           <Button
             className="m-3"
             variant="danger"
-            onClick={() => deleteUser(rowItem[0]._id)}
+            onClick={() => deleteUser(rowItem)}
           >
             Delete
           </Button>
