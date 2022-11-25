@@ -12,7 +12,7 @@ const Registration = () => {
     password: "",
     dateReg: dateNow(),
     dateLog: dateNow(),
-    status: "unblock",
+    status: true,
   });
   const [show, setShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);

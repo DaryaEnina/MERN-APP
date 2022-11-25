@@ -6,7 +6,7 @@ const schema = new Schema({
   name: { type: String },
   dateReg: { type: String },
   dateLog: { type: String },
-  status: { type: String },
+  status: { type: Boolean },
 });
 
 module.exports = model("User", schema);

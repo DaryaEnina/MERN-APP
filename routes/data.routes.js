@@ -44,3 +44,48 @@ router.delete("/delete/:id", async (req, res) => {
     res.status(500).json({ message: "Что-то пошло не так, попробуйте снова" });
   }
 });
+
+// router.put("/status/:id", async (req, res) => {
+//   try {
+//     const id = req.params.id.split(",");
+//     const user = await Users.find({ _id: { $in: id } });
+//     for (let i = 0; i < user.length; i++) {
+//       user.status = !user.status;
+//     }
+//     await user.save(); //is not a function
+//     res.json(user);
+//   } catch (e) {
+//     console.log(e.message);
+//     res.status(500).json({ message: "Что-то пошло не так, попробуйте снова" });
+//   }
+// });
+
+router.put("/status/block/:id", async (req, res) => {
+  try {
+    const id = req.params.id.split(",");
+    const user = await Users.updateMany(
+      { _id: { $in: id } },
+      { $set: { status: false } },
+      { multi: true }
+    );
+    res.json(user);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: "Что-то пошло не так, попробуйте снова" });
+  }
+});
+
+router.put("/status/unblock/:id", async (req, res) => {
+  try {
+    const id = req.params.id.split(",");
+    const user = await Users.updateMany(
+      { _id: { $in: id } },
+      { $set: { status: true } },
+      { multi: true }
+    );
+    res.json(user);
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).json({ message: "Что-то пошло не так, попробуйте снова" });
+  }
+});

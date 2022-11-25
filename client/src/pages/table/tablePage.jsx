@@ -38,10 +38,43 @@ const TablePage = () => {
     fetchUsers();
   }, [fetchUsers, rowItem]);
 
-  const onBlock = async () => {
-    try {
-    } catch (error) {}
-  };
+  //BLOCK
+  const onBlock = useCallback(
+    async (id) => {
+      try {
+        await axios.put(
+          `/api/users/status/block/${id}`,
+          { id },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        fetchUsers();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [fetchUsers]
+  );
+
+  //UNBLOCK
+  const onUnBlock = useCallback(
+    async (id) => {
+      try {
+        await axios.put(
+          `/api/users/status/unblock/${id}`,
+          { id },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        fetchUsers();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [fetchUsers]
+  );
 
   //DELETE
   const deleteUser = useCallback(async (id) => {
@@ -67,10 +100,18 @@ const TablePage = () => {
       <h1 className="mt-5 mb-5 text-center">Table</h1>
       <Row>
         <Col md={4}>
-          <Button className="m-3" variant="dark" onClick={onBlock}>
+          <Button
+            className="m-3"
+            variant="dark"
+            onClick={() => onBlock(rowItem)}
+          >
             Block
           </Button>
-          <Button className="m-3" variant="secondary">
+          <Button
+            className="m-3"
+            variant="secondary"
+            onClick={() => onUnBlock(rowItem)}
+          >
             Unblock
           </Button>
           <Button
@@ -116,7 +157,7 @@ const TablePage = () => {
                 <td>{item.email}</td>
                 <td>{item.dateReg}</td>
                 <td>{item.dateLog}</td>
-                <td>{item.status}</td>
+                <td>{item.status === true ? "unblock" : "block"}</td>
               </tr>
             );
           })}
