@@ -22,17 +22,21 @@ const TablePage = () => {
     (e, item) => {
       if (e.target.checked === true) {
         let rows = rowItem;
-        rows.push(item._id);
-        setRowItem(rows);
+        if (!rows.includes(item._id)) {
+          rows.push(item._id);
+        }
+        setRowItem(rowItem);
+      } else {
+        const deleteItem = rowItem.filter((p) => p !== item._id);
+        setRowItem(deleteItem);
       }
-      console.log(rowItem);
     },
     [rowItem]
   );
 
   useEffect(() => {
     fetchUsers();
-  }, [fetchUsers]);
+  }, [fetchUsers, rowItem]);
 
   const onBlock = async () => {
     try {
