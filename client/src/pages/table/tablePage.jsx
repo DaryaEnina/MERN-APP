@@ -69,6 +69,8 @@ const TablePage = () => {
           }
         );
         fetchUsers();
+        //TODO убрать чекбоксы после блок/анблок
+        //заняться функционалом блок=х-з
       } catch (error) {
         console.log(error);
       }

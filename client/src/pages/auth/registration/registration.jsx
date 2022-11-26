@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHttp } from "../../../hooks/http.hook";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { dateNow } from "../../../date";
+import { LoginContext } from "../../../context/loginContext";
 import "../style.css";
 
 const Registration = () => {
   const { loading, request, error, clearError } = useHttp();
+  const auth = useContext(LoginContext);
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -32,7 +35,10 @@ const Registration = () => {
   const registerHandler = async () => {
     try {
       const data = await request("api/auth/register", "POST", { ...form });
-      console.log(data);
+      if (data) {
+        const data = await request("api/auth/login", "POST", { ...form });
+        auth.login(data.token, data.userId);
+      }
     } catch (error) {}
   };
   return (
