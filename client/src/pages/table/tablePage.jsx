@@ -3,7 +3,6 @@ import axios from "axios";
 import { useState, useEffect, useCallback, useContext } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
-import Header from "../../Components/Header/header";
 import { LoginContext } from "../../context/loginContext";
 
 const TablePage = () => {
@@ -113,7 +112,6 @@ const TablePage = () => {
 
   return (
     <>
-      <Header />
       <Container className="justify-content-md-center">
         <h1 className="mt-5 mb-5 text-center">Table</h1>
         <Row>

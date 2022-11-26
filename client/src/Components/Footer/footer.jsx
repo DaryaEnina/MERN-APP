@@ -4,7 +4,7 @@ import { Navbar, Container, NavbarBrand } from "react-bootstrap";
 const Footer = () => {
   return (
     <div className="fixed-bottom">
-      <Navbar color="dark" dark>
+      <Navbar color="dark">
         <Container className="shadow-border d-flex justify-content-sm-end">
           <NavbarBrand>
             <a

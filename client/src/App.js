@@ -4,6 +4,8 @@ import useRoutes from "./routes";
 import { useLogin } from "./hooks/login.hook";
 import { LoginContext } from "./context/loginContext";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Header from "./Components/Header/header";
+import Footer from "./Components/Footer/footer";
 
 function App() {
   const { token, login, logOut, userId } = useLogin();
@@ -19,7 +21,12 @@ function App() {
         isLogined,
       }}
     >
-      <Router>{routes}</Router>;
+      <Router>
+        <Header />
+        {routes}
+        <Footer />
+      </Router>
+      ;
     </LoginContext.Provider>
   );
 }
