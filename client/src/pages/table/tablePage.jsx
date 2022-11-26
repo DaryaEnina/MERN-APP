@@ -1,14 +1,18 @@
 import React from "react";
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
 import Header from "../../Components/Header/header";
+import { LoginContext } from "../../context/loginContext";
 
 const TablePage = () => {
   const [data, setData] = useState([]);
   const [rowItem, setRowItem] = useState([]);
   const { request } = useHttp();
+  const auth = useContext(LoginContext);
+
+  const storageData = JSON.parse(localStorage.getItem("userData"));
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -35,7 +39,7 @@ const TablePage = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [fetchUsers, rowItem]);
+  }, [fetchUsers]);
 
   //BLOCK
   const onBlock = useCallback(
@@ -48,12 +52,19 @@ const TablePage = () => {
             headers: { "Content-Type": "application/json" },
           }
         );
-        fetchUsers();
       } catch (error) {
         console.log(error);
       }
+      for (let i = 0; i < rowItem.length; i++) {
+        if (storageData.userId === rowItem[i]) {
+          auth.logOut();
+        } else {
+          fetchUsers();
+        }
+      }
     },
-    [fetchUsers]
+
+    [fetchUsers, auth, storageData, rowItem]
   );
 
   //UNBLOCK
@@ -68,8 +79,6 @@ const TablePage = () => {
           }
         );
         fetchUsers();
-        //TODO убрать чекбоксы после блок/анблок
-        //заняться функционалом блок=х-з
       } catch (error) {
         console.log(error);
       }
@@ -78,19 +87,29 @@ const TablePage = () => {
   );
 
   //DELETE
-  const deleteUser = useCallback(async (id) => {
-    try {
-      await axios.delete(
-        `/api/users/delete/${id}`,
-        { id },
-        {
-          headers: { "Content-Type": "application/json" },
+  const deleteUser = useCallback(
+    async (id) => {
+      try {
+        await axios.delete(
+          `/api/users/delete/${id}`,
+          { id },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+      for (let i = 0; i < rowItem.length; i++) {
+        if (storageData.userId === rowItem[i]) {
+          auth.logOut();
+        } else {
+          fetchUsers();
         }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+      }
+    },
+    [auth, fetchUsers, rowItem, storageData]
+  );
 
   return (
     <>

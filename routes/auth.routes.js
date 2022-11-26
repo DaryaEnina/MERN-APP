@@ -70,7 +70,7 @@ router.post(
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-          message: "Некорректные данные регистрации",
+          message: "Некорректные данные ",
         });
       }
 
@@ -83,7 +83,11 @@ router.post(
           .status(400)
           .json({ message: "Пользователь с таким email не найден" });
       }
-
+      if (user.status === false) {
+        return res
+          .status(400)
+          .json({ message: "Данный пользователь заблокирован" });
+      }
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
