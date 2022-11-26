@@ -1,15 +1,14 @@
 import React from "react";
 import axios from "axios";
-import { useState, useEffect, useCallback, useContext } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useHttp } from "../../hooks/http.hook";
-import { LoginContext } from "../../context/loginContext";
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
+import Header from "../../Components/Header/header";
 
 const TablePage = () => {
   const [data, setData] = useState([]);
   const [rowItem, setRowItem] = useState([]);
   const { request } = useHttp();
-  const auth = useContext(LoginContext);
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -93,79 +92,73 @@ const TablePage = () => {
     }
   }, []);
 
-  //LOGOUT
-  const onLogout = () => {
-    auth.logOut();
-  };
   return (
-    <Container className="justify-content-md-center">
-      <h1 className="mt-5 mb-5 text-center">Table</h1>
-      <Row>
-        <Col md={4}>
-          <Button
-            className="m-3"
-            variant="dark"
-            onClick={() => onBlock(rowItem)}
-          >
-            Block
-          </Button>
-          <Button
-            className="m-3"
-            variant="secondary"
-            onClick={() => onUnBlock(rowItem)}
-          >
-            Unblock
-          </Button>
-          <Button
-            className="m-3"
-            variant="danger"
-            onClick={() => deleteUser(rowItem)}
-          >
-            Delete
-          </Button>
-        </Col>
-        <Col md={{ span: 4, offset: 4 }} className="d-flex justify-content-end">
-          <Button className="m-3 " variant="danger" onClick={onLogout}>
-            LogOut
-          </Button>
-        </Col>
-      </Row>
+    <>
+      <Header />
+      <Container className="justify-content-md-center">
+        <h1 className="mt-5 mb-5 text-center">Table</h1>
+        <Row>
+          <Col md={4}>
+            <Button
+              className="m-3"
+              variant="dark"
+              onClick={() => onBlock(rowItem)}
+            >
+              Block
+            </Button>
+            <Button
+              className="m-3"
+              variant="secondary"
+              onClick={() => onUnBlock(rowItem)}
+            >
+              Unblock
+            </Button>
+            <Button
+              className="m-3"
+              variant="danger"
+              onClick={() => deleteUser(rowItem)}
+            >
+              Delete
+            </Button>
+          </Col>
+        </Row>
 
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th></th>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Date Reg</th>
-            <th>Date Log</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item, index) => {
-            return (
-              <tr key={item._id}>
-                <td>
-                  <input
-                    type="checkbox"
-                    id={item._id}
-                    onChange={(e) => onChoose(e, item)}
-                  />
-                </td>
-                <td>{item._id}</td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.dateReg}</td>
-                <td>{item.dateLog}</td>
-                <td>{item.status === true ? "unblock" : "block"}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    </Container>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th></th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Date Reg</th>
+              <th>Date Log</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((item, index) => {
+              return (
+                <tr key={item._id}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      id={item._id}
+                      onChange={(e) => onChoose(e, item)}
+                    />
+                  </td>
+                  <td>{item._id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.dateReg}</td>
+                  <td>{item.dateLog}</td>
+                  <td>{item.status === true ? "unblock" : "block"}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </Container>
+    </>
   );
 };
 export default TablePage;
