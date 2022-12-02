@@ -1,3 +1,6 @@
 # MERN-APP
 
-MongoDB test: test
+MongoDB 
+Express
+React
+Node.js
