@@ -44,6 +44,9 @@ const Registration = () => {
         },
         {
           "Access-Control-Allow-Origin": "*",
+        },
+        {
+          mode: "no-cors",
         }
       );
       if (data) {
