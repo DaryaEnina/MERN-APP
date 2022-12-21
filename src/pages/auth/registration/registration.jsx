@@ -46,7 +46,7 @@ const Registration = () => {
           "Access-Control-Allow-Origin": "*",
         },
         {
-          mode: "no-cors",
+          mode: "cors",
         }
       );
       if (data) {
@@ -56,6 +56,9 @@ const Registration = () => {
           { ...form },
           {
             "Access-Control-Allow-Origin": "*",
+          },
+          {
+            mode: "cors",
           }
         );
         auth.login(data.token, data.userId);
