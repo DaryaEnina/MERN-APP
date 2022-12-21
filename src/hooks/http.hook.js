@@ -5,7 +5,13 @@ export const useHttp = () => {
   const [error, setError] = useState(null);
 
   const request = useCallback(
-    async (url, method = "GET", mode = "cors", body = null, headers = {}) => {
+    async (
+      url,
+      method = "GET",
+      mode = "no-cors",
+      body = null,
+      headers = {}
+    ) => {
       setLoading(true);
       try {
         if (body) {
