@@ -1,30 +1,43 @@
 {
-  "name": "mern",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "start": "node app.js",
-    "server": "nodemon app.js",
-    "client": "npm run start --prefix client",
-    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
-    "client:install": "npm install --prefix client",
-    "client:build": "npm run build --prefix client"
-  },
-  "author": "Darya Enina",
-  "license": "ISC",
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "bcrypt": "^5.1.0",
-    "client": "^0.0.1",
-    "config": "^3.3.8",
-    "create-react-app": "^1.2.1",
-    "express": "^4.18.2",
-    "express-validator": "^6.14.2",
-    "js": "^0.1.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.7.2"
+    "axios": "^1.2.0",
+    "bootstrap": "^5.2.2",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.6.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.3",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "proxy": "https://backend-production-bc92.up.railway.app/",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "concurrently": "^7.6.0"
   }
 }

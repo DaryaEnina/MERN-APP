@@ -5,6 +5,8 @@ import { dateNow } from "../../../date";
 import { LoginContext } from "../../../context/loginContext";
 import "../style.css";
 
+const baseUrl = "https://backend-production-bc92.up.railway.app";
+
 const Registration = () => {
   const { loading, request, error, clearError } = useHttp();
   const auth = useContext(LoginContext);
@@ -34,9 +36,25 @@ const Registration = () => {
 
   const registerHandler = async () => {
     try {
-      const data = await request("api/auth/register", "POST", { ...form });
+      const data = await request(
+        `${baseUrl}/api/auth/register`,
+        "POST",
+        {
+          ...form,
+        },
+        {
+          "Access-Control-Allow-Origin": "*",
+        }
+      );
       if (data) {
-        const data = await request("api/auth/login", "POST", { ...form });
+        const data = await request(
+          "api/auth/login",
+          "POST",
+          { ...form },
+          {
+            "Access-Control-Allow-Origin": "*",
+          }
+        );
         auth.login(data.token, data.userId);
       }
     } catch (error) {}
