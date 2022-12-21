@@ -24,7 +24,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://backend-production-bc92.up.railway.app/",
   "browserslist": {
     "production": [
       ">0.2%",
