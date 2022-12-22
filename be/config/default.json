@@ -1,0 +1,5 @@
+{
+  "port": "80",
+  "mongoURL": "mongodb+srv://test:test@test.qk7j6un.mongodb.net/?retryWrites=true&w=majority",
+  "jwtSecret": "secret mern"
+}
