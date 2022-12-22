@@ -3,7 +3,6 @@ import { useHttp } from "../../../hooks/http.hook";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { dateNow } from "../../../date";
 import { LoginContext } from "../../../context/loginContext";
-import axios from "../../../axios";
 import "../style.css";
 
 const baseUrl = "https://backend-production-bc92.up.railway.app";
@@ -50,25 +49,6 @@ const Registration = () => {
       console.log(error);
     }
   };
-  // const registerHandler = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${baseUrl}/api/auth/register`,
-  //       { ...form },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           "Access-Control-Allow-Origin": "*",
-  //         },
-  //         mode: "cors",
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   return (
     <div className="Auth-form-container">
       <ToastContainer position="top-end">
