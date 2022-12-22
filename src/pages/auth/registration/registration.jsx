@@ -3,6 +3,7 @@ import { useHttp } from "../../../hooks/http.hook";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { dateNow } from "../../../date";
 import { LoginContext } from "../../../context/loginContext";
+import axios from "../../../axios";
 import "../style.css";
 
 const baseUrl = "https://backend-production-bc92.up.railway.app";
@@ -36,35 +37,38 @@ const Registration = () => {
 
   const registerHandler = async () => {
     try {
-      const data = await request(
-        `${baseUrl}/api/auth/register`,
-        "POST",
-        {
-          ...form,
-        },
-        {
-          "Access-Control-Allow-Origin": "*",
-        },
-        {
-          mode: "cors",
-        }
-      );
+      const data = await request(`${baseUrl}/api/auth/register`, "POST", {
+        ...form,
+      });
       if (data) {
-        const data = await request(
-          "api/auth/login",
-          "POST",
-          { ...form },
-          {
-            "Access-Control-Allow-Origin": "*",
-          },
-          {
-            mode: "cors",
-          }
-        );
+        const data = await request(`${baseUrl}/api/auth/login`, "POST", {
+          ...form,
+        });
         auth.login(data.token, data.userId);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+  // const registerHandler = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${baseUrl}/api/auth/register`,
+  //       { ...form },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "Access-Control-Allow-Origin": "*",
+  //         },
+  //         mode: "cors",
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   return (
     <div className="Auth-form-container">
       <ToastContainer position="top-end">

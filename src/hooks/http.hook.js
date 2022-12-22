@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import axios from "axios";
 
 export const useHttp = () => {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,7 @@ export const useHttp = () => {
 
           headers["Content-Type"] = "application/json";
         }
-        const response = await fetch(url, {
+        const response = await axios(url, {
           method,
           body,
           headers,

@@ -5,6 +5,8 @@ import "../style.css";
 import { useContext } from "react";
 import { LoginContext } from "../../../context/loginContext";
 
+const baseUrl = "https://backend-production-bc92.up.railway.app";
+
 const Login = () => {
   const auth = useContext(LoginContext);
   const { loading, request, error, clearError } = useHttp();
@@ -32,7 +34,9 @@ const Login = () => {
 
   const loginHandler = async () => {
     try {
-      const data = await request("api/auth/login", "POST", { ...form });
+      const data = await request(`${baseUrl}/api/auth/login`, "POST", {
+        ...form,
+      });
       auth.login(data.token, data.userId);
     } catch (error) {}
   };
