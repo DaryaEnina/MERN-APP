@@ -4,8 +4,7 @@ import { Toast, ToastContainer } from "react-bootstrap";
 import "../style.css";
 import { useContext } from "react";
 import { LoginContext } from "../../../context/loginContext";
-
-const baseUrl = "https://backend-production-bc92.up.railway.app";
+import { baseUrl } from "../../../url";
 
 const Login = () => {
   const auth = useContext(LoginContext);

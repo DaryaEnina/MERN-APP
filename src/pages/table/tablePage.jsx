@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useContext } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
 import { LoginContext } from "../../context/loginContext";
+import { baseUrl } from "../../url";
 
 const TablePage = () => {
   const [data, setData] = useState([]);
@@ -15,7 +16,7 @@ const TablePage = () => {
 
   const fetchUsers = useCallback(async () => {
     try {
-      const fetched = await request("/api/users", "GET", null);
+      const fetched = await request(`${baseUrl}/api/users`, "GET", null);
       setData(fetched);
     } catch (e) {}
   }, [request]);
