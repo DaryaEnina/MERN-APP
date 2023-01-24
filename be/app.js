@@ -22,7 +22,7 @@ const whitelist = [
 //   },
 // };
 const corsOptions = {
-  origin: "https://mern-app-client.onrender.com/",
+  origin: "https://mern-app-client.onrender.com",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   mode: "no-cors",
 };
