@@ -24,7 +24,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "https://backend-production-bc92.up.railway.app/",
+  "proxy": "https://mern-app-be.onrender.com",
   "browserslist": {
     "production": [
       ">0.2%",
@@ -38,10 +38,6 @@
     ]
   },
   "devDependencies": {
-    "concurrently": "^7.6.0",
-    "html-webpack-plugin": "^5.5.0",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.11.1"
+    "concurrently": "^7.6.0"
   }
 }
